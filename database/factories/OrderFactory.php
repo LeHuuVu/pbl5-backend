@@ -17,7 +17,9 @@ class OrderFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'is_ordered' => 1,
+            'delivery_address' => $this->faker->unique()->address(),
+            'delivery_time' => $this->faker->dateTime()
         ];
     }
 }
