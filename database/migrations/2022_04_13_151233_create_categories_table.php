@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('order', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id()->autoIncrement();
-            $table->unsignedBigInteger('id_user');
-            $table->string('delivery_address');
-            $table->timestamp('delivery_time');
-            $table->boolean('is_ordered')->default(false);
+            $table->string('name')->unique();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('order');
+        Schema::dropIfExists('categories');
     }
 };

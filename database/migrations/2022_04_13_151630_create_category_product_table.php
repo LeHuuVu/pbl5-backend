@@ -13,12 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('company', function (Blueprint $table) {
-            $table->id()->autoIncrement();
-            $table->unsignedBigInteger('id_user');
-            $table->string('name');
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+        Schema::create('category_product', function (Blueprint $table) {
+            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('product_id');
         });
     }
 
@@ -29,6 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('company');
+        Schema::dropIfExists('category_product');
     }
 };

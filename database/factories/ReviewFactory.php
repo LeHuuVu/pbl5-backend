@@ -17,7 +17,9 @@ class ReviewFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'star_rating' => rand(1,5),
+            'comment' => $this->faker->sentence(rand(5,20)),
+            'time' => $this->faker->dateTime()
         ];
     }
 }
