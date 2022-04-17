@@ -10,7 +10,9 @@ class UserController extends Controller
 {
     public function index(Request $request){
         $user = User::all();
-        $company = Company::all();
-        dd($company);
+        foreach($user as $data){
+            echo $data->name;
+            echo '<br>';
+        }
     }
 }
