@@ -16,7 +16,7 @@ class CategorySeeder extends Seeder
     public function run()
     {
         $category = Category::all();
-        if($category != null){
+        if($category->count() == 0){
             Category::insert(['name' => 'Gia dụng']);
             Category::insert(['name' => 'Công nghệ']);
             Category::insert(['name' => 'Thực phẩm']);
