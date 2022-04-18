@@ -20,17 +20,17 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::insert([
-            'name' => 'PTH',
-            'address' => 'ĐN',
-            'phone' => '01234567890',
-            'email' => 'thanhhoi@gmail.com',
-            'role' => 0,
-            'password' => Hash::make(123456),
-            'avatar' => '',
-            'email_verified_at' => now(),
-            'remember_token' => '1234567890',
-        ]);                
+        // User::insert([
+        //     'name' => 'PTH',
+        //     'address' => 'ĐN',
+        //     'phone' => '01234567890',
+        //     'email' => 'thanhhoi@gmail.com',
+        //     'role' => 0,
+        //     'password' => Hash::make(123456),
+        //     'avatar' => '',
+        //     'email_verified_at' => now(),
+        //     'remember_token' => '1234567890',
+        // ]);                
         User::factory(3)->create(
             ['role' => 2]
         );
