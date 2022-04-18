@@ -15,8 +15,11 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        Category::insert(['name' => 'Gia dụng']);
-        Category::insert(['name' => 'Công nghệ']);
-        Category::insert(['name' => 'Thực phẩm']);
+        $category = Category::all();
+        if($category != null){
+            Category::insert(['name' => 'Gia dụng']);
+            Category::insert(['name' => 'Công nghệ']);
+            Category::insert(['name' => 'Thực phẩm']);
+        }
     }
 }
