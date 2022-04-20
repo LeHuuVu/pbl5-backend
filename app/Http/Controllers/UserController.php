@@ -12,14 +12,14 @@ class UserController extends Controller
     public function index(Request $request){
         $user = User::all();
         foreach($user as $data){
-            echo $data->name;
+            echo $data->email;
             echo '<br>';
         }
     }
 
     public function login(Request $request){
         $user = User::where('email', $request->email)->first();
-        if(!$user || Hash::check($request->password, $user->password)){
+        if(!$user || !Hash::check($request->password, $user->password)){
             return ["error" => "Incorrect email or password"];
         }
         return $user;
