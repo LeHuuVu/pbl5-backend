@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('address');
             $table->string('avatar');
             $table->string('password');
-            $table->rememberToken();
+            $table->rememberToken()->nullable();
             $table->timestamps();
         });
     }
