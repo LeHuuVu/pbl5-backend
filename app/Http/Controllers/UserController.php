@@ -22,7 +22,7 @@ class UserController extends Controller
     public function login(Request $request){
         $user = User::where('email', $request->email)->first();
         if(!$user || !Hash::check($request->password, $user->password)){
-            return response()->json(['message' => 'Email or password is incorrect'], 400);
+            return response()->json(['error' => 'Email or password is incorrect'], 400);
         }
         return $user;
     }

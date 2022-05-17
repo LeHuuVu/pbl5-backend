@@ -21,11 +21,11 @@ class ProductController extends Controller
                 
             }
             else{
-                return response()->json(['message' => 'Your user cannot perform this function'], 400);
+                return response()->json(['error' => 'Your user cannot perform this function'], 400);
             }
         }
         catch(Exception $e){
-            return response()->json(['message' => $e->getMessage()], 400);
+            return response()->json(['error' => $e->getMessage()], 400);
         }
     }
 }
