@@ -29,7 +29,7 @@ class OrderController extends Controller
                 for($i = 0; $i < count($request->id_product); $i++){
                     $product = Product::where('id', $request->id_product[$i])->first();
                     if($product->amount_remaining < $request->amount_order[$i]){
-                        return response()->json(['error' => 'Not Enough Available'], 400);
+                        return response()->json(['message' => 'Not Enough Available'], 400);
                     }
                     array_push($amountList, $request->amount_order[$i]);
                     $totalPrice = $product->price * $request->amount_order[$i];
@@ -52,12 +52,12 @@ class OrderController extends Controller
                 return response()->json(['message' => 'Success']);
             }
             else{
-                return response()->json(['error' => 'Not find your user'], 400);
+                return response()->json(['message' => 'Not find your user'], 400);
             }
 
         }
         catch(Exception $e){
-            return response()->json(['error' => $e->getMessage()], 400);
+            return response()->json(['message' => $e->getMessage()], 400);
         }
     }
 }
