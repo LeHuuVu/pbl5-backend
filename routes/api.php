@@ -26,4 +26,4 @@ Route::post('v1/login',[UserController::class,'login']);
 Route::post('v1/register',[UserController::class,'register']);
 Route::get('v1/getAllProduct',[ProductController::class,'getAllProduct']);
 Route::post('v1/order/{id}', [OrderController::class,'order']);
-Route::post('v1/createNewProduct/{id}',[ProductController::class],'createNewProduct');
+Route::post('v1/createNewProduct/{id}',[ProductController::class,'createNewProduct']);

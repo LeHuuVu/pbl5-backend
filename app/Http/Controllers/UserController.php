@@ -55,7 +55,7 @@ class UserController extends Controller
             return $user;
         }
         catch(Exception $e){
-            return $e;
+            return response()->json(['message' => $e->getMessage()], 400);
         }
     }
 }

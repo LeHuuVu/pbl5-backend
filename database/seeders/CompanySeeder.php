@@ -17,14 +17,6 @@ class CompanySeeder extends Seeder
      */
     public function run()
     {
-        // $faker = \Faker\Factory::create();
-        // for($i = 2; $i <= 4; $i++){
-        //     Company::insert(
-        //         ['id_user' => $i,
-        //          'name' => $faker->name()]
-        //     );
-        // }
-
         Company::insert([
             'id_user' => 2,
             'name' => 'Toshiba'
