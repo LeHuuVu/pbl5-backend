@@ -32,7 +32,7 @@ class ProductSeeder extends Seeder
                 ️ Tính năng hẹn giờ: 0-180 phút.',
                 'amount_sold' => rand(0,100),
                 'amount_remaining' => rand(0,100),
-                'image' => ('https://pbl5-backend.herokuapp.com/public/products/1.png'),
+                'image' => ('https://pbl5-backend.herokuapp.com/products/1.png'),
             ],
         )->category()->attach($category->where('id',1)->first());
         Product::create(
@@ -49,7 +49,7 @@ class ProductSeeder extends Seeder
                 Màn hình cảm ứng điện tử hiện đại, nắp kính sang trọng giúp dễ dàng quan sát thực phẩm bên trong',
                 'amount_sold' => rand(0,100),
                 'amount_remaining' => rand(0,100),
-                'image' => ('https://pbl5-backend.herokuapp.com/public/products/2.png'),
+                'image' => ('https://pbl5-backend.herokuapp.com/products/2.png'),
             ],
         )->category()->attach([1]);
         Product::create(
@@ -67,7 +67,7 @@ class ProductSeeder extends Seeder
                 -Loại sản phẩm: bếp lẩu liền không tách rời',
                 'amount_sold' => rand(0,100),
                 'amount_remaining' => rand(0,100),
-                'image' => ('https://pbl5-backend.herokuapp.com/public/products/3.png'),
+                'image' => ('https://pbl5-backend.herokuapp.com/products/3.png'),
             ],
         )->category()->attach([1]);
         Product::create(
@@ -80,7 +80,7 @@ class ProductSeeder extends Seeder
                 Bộ lọc nước tại vòi hiện đại được làm từ chất liệu INOX siêu bền và thiết kế lõi lọc Sứ cao cấp, sáng bóng, bền đẹp và sang trọng.- Sản phẩm có thiết kế nhỏ gọn, dễ dàng lắp đặt, tương thích với hầu hết các loại vòi nước. Dụng cụ có thể lọc các độc tố gây bệnh như asen, amoni, các kim loại nặng, đóng cặ và khử sạch mùi nước sinh hoạt. có thể lọc các độc tố gây bệnh như asen, amoni, các kim loại nặng, đóng cặ và khử sạch mùi nước sinh hoạt.',
                 'amount_sold' => rand(0,100),
                 'amount_remaining' => rand(0,100),
-                'image' => ('https://pbl5-backend.herokuapp.com/public/products/4.png'),
+                'image' => ('https://pbl5-backend.herokuapp.com/products/4.png'),
             ],
         )->category()->attach([1]);
         Product::create(
@@ -91,7 +91,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Robot hút bụi lau nhà tự đổ rác Neabot N1 Plus hàng chính hãng 2021',
                 'amount_sold' => rand(0,100),
                 'amount_remaining' => rand(0,100),
-                'image' => ('https://pbl5-backend.herokuapp.com/public/products/5.png'),
+                'image' => ('https://pbl5-backend.herokuapp.com/products/5.png'),
             ],
         )->category()->attach([1,2]);
         Product::create(
@@ -108,7 +108,7 @@ class ProductSeeder extends Seeder
                 Công nghệ tự động nhận dạng thiết bị và điều chỉnh công suất, điện áp và dòng điện phù hợp với từng loại thiết bị',
                 'amount_sold' => rand(0,100),
                 'amount_remaining' => rand(0,100),
-                'image' => ('https://pbl5-backend.herokuapp.com/public/products/6.png'),
+                'image' => ('https://pbl5-backend.herokuapp.com/products/6.png'),
             ],
         )->category()->attach([2]);
         Product::create(
@@ -119,7 +119,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Công suất vượt trội và mở rộng tần số thấp xuống sâu đến 16 Hz với biên độ chính xác và có kiểm soát. Trang bị củ loa SVS 12 inch hoàn toàn mới, bộ khuếch đại Sledge 550 Watts RMS, công suất cực đại 1.500+ Watts với đầu ra MOSFET hoàn toàn tách biệt và ứng dụng điện thoại thông minh SVS subwoofer DSP. Được tối ưu hóa với thiết kế thùng loa họng thông hơi kép để loa đạt được mức âm trầm với độ méo tiếng thấp',
                 'amount_sold' => rand(0,100),
                 'amount_remaining' => rand(0,100),
-                'image' => ('https://pbl5-backend.herokuapp.com/public/products/7.png'),
+                'image' => ('https://pbl5-backend.herokuapp.com/products/7.png'),
             ],
         )->category()->attach([2]);
         Product::create(
@@ -130,7 +130,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Với sản phẩm tươi sống, trọng lượng thực tế có thể chênh lệch khoảng 10%.',
                 'amount_sold' => rand(0,100),
                 'amount_remaining' => rand(0,100),
-                'image' => ('https://pbl5-backend.herokuapp.com/public/products/8.png'),
+                'image' => ('https://pbl5-backend.herokuapp.com/products/8.png'),
             ],
         )->category()->attach([3]);
         Product::create(
@@ -141,7 +141,7 @@ class ProductSeeder extends Seeder
                 'description' => 'Trứng cá ngừ đại dương là thực phẩm hải sản sung dinh dưỡng tốt nhất cho người gầy, người già yếu đặc biệt là cho trẻ em.',
                 'amount_sold' => rand(0,100),
                 'amount_remaining' => rand(0,100),
-                'image' => ('https://pbl5-backend.herokuapp.com/public/products/9.png'),
+                'image' => ('https://pbl5-backend.herokuapp.com/products/9.png'),
             ],
         )->category()->attach([3]);
         Product::create(
@@ -152,7 +152,7 @@ class ProductSeeder extends Seeder
                 'description' => 'tra mạng là có',
                 'amount_sold' => rand(0,100),
                 'amount_remaining' => rand(0,100),
-                'image' => ('https://pbl5-backend.herokuapp.com/public/products/10.png'),
+                'image' => ('https://pbl5-backend.herokuapp.com/products/10.png'),
             ],
         )->category()->attach([3]);
     }
