@@ -39,7 +39,7 @@ class ProductController extends Controller
                     'price' => $request->price,
                     'amount_sold' => $request->amount_sold,
                     'amount_remaining' => $request->amount_remaining,
-                    'image' => $request->file('image')->store('products')
+                    'image' => $request->file('image')->store('public/products')
                 ]);
                 $product->save();
                 return $product;
