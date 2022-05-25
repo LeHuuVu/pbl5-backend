@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -27,3 +28,5 @@ Route::post('v1/register',[UserController::class,'register']);
 Route::get('v1/getAllProduct',[ProductController::class,'getAllProduct']);
 Route::post('v1/order/{id}', [OrderController::class,'order']);
 Route::post('v1/createNewProduct/{id}',[ProductController::class,'createNewProduct']);
+
+Route::post('v1/review',[ReviewController::class,'review']);

@@ -25,6 +25,7 @@ class OrderController extends Controller
     
                 $totalPrice = 0;
                 $amountList = [];
+                $productList = [];
         
                 for($i = 0; $i < count($request->id_product); $i++){
                     $product = Product::where('id', $request->id_product[$i])->first();
@@ -32,6 +33,7 @@ class OrderController extends Controller
                         return response()->json(['message' => 'Not Enough Available'], 400);
                     }
                     array_push($amountList, $request->amount_order[$i]);
+                    array_push($productList, $product);
                     $totalPrice = $product->price * $request->amount_order[$i];
     
                     $amountRemaining = $product->amount_remaining - $request->amount_order[$i];
@@ -41,10 +43,10 @@ class OrderController extends Controller
                         'amount_sold' => $amountSold
                     ]);       
                 }
-    
-                foreach($amountList as $amount){
-                    $orders->product()->save($product,[
-                        'amount' => $amount,
+
+                for($i = 0; $i < count($request->id_product); $i++){
+                    $orders->product()->save($productList[$i],[
+                        'amount' => $amountList[$i],
                         'total_price' => $totalPrice
                     ]);
                 }
