@@ -23,10 +23,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+//UserController
 Route::post('v1/login',[UserController::class,'login']);
 Route::post('v1/register',[UserController::class,'register']);
-Route::get('v1/getAllProduct',[ProductController::class,'getAllProduct']);
-Route::post('v1/order/{id}', [OrderController::class,'order']);
-Route::post('v1/createNewProduct/{id}',[ProductController::class,'createNewProduct']);
 
+//ProductController
+Route::get('v1/getAllProduct',[ProductController::class,'getAllProduct']);
+Route::post('v1/createNewProduct/{id}',[ProductController::class,'createNewProduct']);
+Route::post('v1/getReviewProduct',[ProductController::class,'getReviewProduct']);
+
+//OrderController
+Route::post('v1/order/{id}', [OrderController::class,'order']);
+
+//ReviewController
 Route::post('v1/review',[ReviewController::class,'review']);

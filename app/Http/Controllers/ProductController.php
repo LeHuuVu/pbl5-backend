@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\Review;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Validator;
@@ -13,6 +14,10 @@ class ProductController extends Controller
 {
     public function getAllProduct(){
         return ['data' => Product::all()];
+    }
+
+    public function getReviewProduct(Request $request){
+        return Review::where('id_product', $request->id_product)->get();
     }
 
     public function createNewProduct($id, Request $request){

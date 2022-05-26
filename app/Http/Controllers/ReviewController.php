@@ -35,13 +35,13 @@ class ReviewController extends Controller
                                 'time' => date('Y-m-d H:i:s')
                             ]);
                             $review->save();
-                            return $review;
+                            return response()->json(['message' => 'success']);
                         }
                     }
                 }
     
                 return response()->json(
-                    ['message' => 'This product has not been purchased by you, please buy before rating']
+                    ['message' => 'This product has not been purchased by you, please buy before rating'], 400
                 );
             }
         }catch(Exception $e){
