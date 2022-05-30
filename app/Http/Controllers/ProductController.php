@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Review;
@@ -16,8 +17,40 @@ class ProductController extends Controller
         return ['data' => Product::all()];
     }
 
+    public function getDetailProduct(Request $request){
+        try{
+            $product = Product::where('id', $request->id_product)->first();
+            $company = Company::where('id', $product->id_company)->first();
+            $listReview = Review::where('id_product', $request->id_product)->get();
+            $arrayReview = [];
+            if($listReview){
+                foreach($listReview as $review){
+                    $user = User::where('id', $review->id_user)->first();
+                    array_push($arrayReview, [
+                        'review' => $review,
+                        'user_name' => $user->name,
+                        'user_avatar' => $user->avatar
+                    ]);
+                }
+            }
+            return response()->json([
+                'product' => $product,
+                'company_name' => $company->name,
+                'list_review' => $arrayReview
+            ]);
+        }
+        catch(Exception $e){
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+    }
+
     public function getReviewProduct(Request $request){
-        return Review::where('id_product', $request->id_product)->get();
+        $review = Review::where('id_product', $request->id_product)->get();
+        if($review){
+            return $review;
+        }else{
+            return response()->json(['message' => 'This product has no reviews yet']);
+        }
     }
 
     public function createNewProduct($id, Request $request){
@@ -30,7 +63,7 @@ class ProductController extends Controller
             'image' => 'required'
         ]);
         
-        if($validate->failed()){
+        if($validate->failed()){ 
             return $validate->errors();
         }
 
