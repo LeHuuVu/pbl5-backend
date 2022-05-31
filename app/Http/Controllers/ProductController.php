@@ -17,6 +17,31 @@ class ProductController extends Controller
         return ['data' => Product::all()];
     }
 
+    public function getAllProduct2(){
+        try{
+            $listProduct = [];
+            foreach(Product::all() as $product){
+                $listReview = Review::where('id_product', $product->id)->get();
+                $listRate = [];
+                if($listReview){
+                    foreach($listReview as $review){
+                        array_push($listRate, $review->star_rating);
+                    }
+                }
+                array_push($listProduct, [
+                    'product' => $product,
+                    'star_rating' => $listRate,
+                ]);
+            }
+            
+            return $listProduct;
+
+        }catch(Exception $e){
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+        
+    }
+
     public function getDetailProduct(Request $request){
         try{
             $product = Product::where('id', $request->id_product)->first();

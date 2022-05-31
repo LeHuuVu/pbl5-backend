@@ -28,20 +28,16 @@ class UserController extends Controller
     }
 
     public function register(Request $request){
-        $validate = Validator::make($request->all(),[
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:6',
-            'phone' => 'required',
-            'address' => 'required',
-            'role' => 'required'
-        ]);
-
-        if($validate->failed()){
-            return $validate->errors();
-        }
-
         try{
+            Validator::make($request->all(),[
+                'name' => 'required|max:255',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|min:6',
+                'phone' => 'required',
+                'address' => 'required',
+                'role' => 'required'
+            ]);
+
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,

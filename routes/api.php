@@ -30,12 +30,17 @@ Route::post('v1/register',[UserController::class,'register']);
 
 //ProductController
 Route::get('v1/getAllProduct',[ProductController::class,'getAllProduct']);
+Route::get('v2/getAllProduct',[ProductController::class,'getAllProduct2']);
 Route::post('v1/getDetailProduct',[ProductController::class,'getDetailProduct']);
 Route::post('v1/createNewProduct/{id}',[ProductController::class,'createNewProduct']);
 Route::post('v1/getReviewProduct',[ProductController::class,'getReviewProduct']);
 
 //OrderController
 Route::post('v1/order/{id}', [OrderController::class,'order']);
+Route::post('v2/order', [OrderController::class,'order2']);
+Route::post('v1/addToCart',[OrderController::class,'addToCart']);
+Route::post('v1/takeOutFromCart',[OrderController::class,'takeOutFromCart']);
+Route::post('v1/getCart',[OrderController::class,'getCart']);
 
 //ReviewController
 Route::post('v1/review',[ReviewController::class,'review']);
