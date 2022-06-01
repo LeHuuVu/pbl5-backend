@@ -48,10 +48,3 @@ Route::post('v1/review',[ReviewController::class,'review']);
 
 //CategoryController
 Route::post('v1/getProductByCategory',[CategoryController::class,'getProductByCategory']);
-
-//fileStorage
-Route::get('/artisan/storage', function() {
-    $command = 'storage:link';
-    $result = Artisan::call($command);
-    return Artisan::output();
-});

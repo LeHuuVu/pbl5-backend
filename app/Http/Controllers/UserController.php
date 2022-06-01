@@ -70,7 +70,7 @@ class UserController extends Controller
                 $file = $request->file('avatar');
                 $image_name = time().'.'.$file->getClientOriginalExtension();
                 $destinationPath = storage_path('app/avatar');
-                $link = Storage::url(basename($file->move($destinationPath, $image_name)));
+                $link = 'https://pbl5-backend.herokuapp.com/avatar/'.basename($file->move($destinationPath, $image_name));
             }
             $user = User::create([
                 'name' => $request->name,
