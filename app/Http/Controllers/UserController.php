@@ -56,7 +56,7 @@ class UserController extends Controller
         }
     }
     public function registerV2(Request $request){
-        // try{
+        try{
             Validator::make($request->all(),[
                 'name' => 'required|max:255',
                 'email' => 'required|email|unique:users',
@@ -83,9 +83,9 @@ class UserController extends Controller
             ]);
             $user->save();
             return $user;
-        // }
-        // catch(Exception $e){
-        //     return response()->json(['message' => $e->getMessage()], 400);
-        // }
+        }
+        catch(Exception $e){
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
     }
 }
