@@ -14,6 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('reviews', function (Blueprint $table) {
+            $table->id()->autoIncrement();
             $table->unsignedBigInteger('id_user');
             $table->unsignedBigInteger('id_product');
             $table->tinyInteger('star_rating');
