@@ -67,10 +67,13 @@ class UserController extends Controller
             ]);
             $file;
             if ($request->hasFile('avatar')) {
-                $file = $request->file('avatar');
-                $image_name = time().'.'.$file->getClientOriginalExtension();
-                $destinationPath = storage_path('app/avatar');
-                $link = 'https://pbl5-backend.herokuapp.com/avatar/'.basename($file->move($destinationPath, $image_name));
+                // $file = $request->file('avatar');
+                // $image_name = time().'.'.$file->getClientOriginalExtension();
+                $path = $request->file('avatar')->storeAs(
+                    'avatar', $request->name.time().'.'.$request->file('avatar')->getClientOriginalExtension()
+                );
+                // $destinationPath = storage_path('app/avatar');
+                $link = 'https://pbl5-backend.herokuapp.com/'.$path;
             }
             $user = User::create([
                 'name' => $request->name,
