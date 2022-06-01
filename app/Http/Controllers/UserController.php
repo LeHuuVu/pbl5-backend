@@ -74,6 +74,7 @@ class UserController extends Controller
                 );
                 // $destinationPath = storage_path('app/avatar');
                 $link = 'https://pbl5-backend.herokuapp.com/'.$path;
+                return $link;
             }
             $user = User::create([
                 'name' => $request->name,
