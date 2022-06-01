@@ -69,8 +69,8 @@ class UserController extends Controller
             if ($request->hasFile('avatar')) {
                 // $file = $request->file('avatar');
                 // $image_name = time().'.'.$file->getClientOriginalExtension();
-                $path = $request->file('avatar')->storeAs(
-                    'avatar', $request->name.time().'.'.$request->file('avatar')->getClientOriginalExtension()
+                $path = Storage::putFileAs(
+                    'avatar', $request->file('avatar'), $request->name.time().'.'.$request->file('avatar')->getClientOriginalExtension()
                 );
                 // $destinationPath = storage_path('app/avatar');
                 $link = 'https://pbl5-backend.herokuapp.com/'.$path;
