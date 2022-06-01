@@ -56,25 +56,21 @@ class UserController extends Controller
         }
     }
     public function registerV2(Request $request){
-        try{
+        // try{
             Validator::make($request->all(),[
                 'name' => 'required|max:255',
                 'email' => 'required|email|unique:users',
                 'password' => 'required|min:6',
                 'phone' => 'required',
                 'address' => 'required',
-                'role' => 'required'
+                'role' => 'required',
+                'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
             $file;
             if ($request->hasFile('avatar')) {
-                // $file = $request->file('avatar');
-                // $image_name = time().'.'.$file->getClientOriginalExtension();
-                $path = Storage::putFileAs(
-                    'avatar', $request->file('avatar'), $request->name.time().'.'.$request->file('avatar')->getClientOriginalExtension()
-                );
-                // $destinationPath = storage_path('app/avatar');
-                $link = 'https://pbl5-backend.herokuapp.com/'.$path;
-                return $link;
+                $link = Storage::disk('s3')->put('images/avatars', $request->avatar);
+                $imageName = time().'.'.$request->avatar->getClientOriginalExtension();
+                $link = Storage::disk('s3')->url($link);
             }
             $user = User::create([
                 'name' => $request->name,
@@ -87,9 +83,9 @@ class UserController extends Controller
             ]);
             $user->save();
             return $user;
-        }
-        catch(Exception $e){
-            return response()->json(['message' => $e->getMessage()], 400);
-        }
+        // }
+        // catch(Exception $e){
+        //     return response()->json(['message' => $e->getMessage()], 400);
+        // }
     }
 }
