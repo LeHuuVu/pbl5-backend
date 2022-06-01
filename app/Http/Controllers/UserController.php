@@ -66,10 +66,8 @@ class UserController extends Controller
                 'role' => 'required',
                 'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
-            $file;
             if ($request->hasFile('avatar')) {
                 $link = Storage::disk('s3')->put('images/avatars', $request->avatar);
-                $imageName = time().'.'.$request->avatar->getClientOriginalExtension();
                 $link = Storage::disk('s3')->url($link);
             }
             $user = User::create([

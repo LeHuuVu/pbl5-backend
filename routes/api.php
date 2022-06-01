@@ -33,7 +33,7 @@ Route::post('v2/register',[UserController::class,'registerV2']);
 Route::get('v1/getAllProduct',[ProductController::class,'getAllProduct']);
 Route::get('v2/getAllProduct',[ProductController::class,'getAllProduct2']);
 Route::post('v1/getDetailProduct',[ProductController::class,'getDetailProduct']);
-Route::post('v1/createNewProduct/{id}',[ProductController::class,'createNewProduct']);
+Route::post('v1/createNewProduct',[ProductController::class,'createNewProduct']);
 Route::post('v1/getReviewProduct',[ProductController::class,'getReviewProduct']);
 
 //OrderController
