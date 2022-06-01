@@ -10,6 +10,7 @@ use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -78,23 +79,25 @@ class ProductController extends Controller
         }
     }
 
-    public function createNewProduct($id, Request $request){
-        $validate = Validator::make($request->all(),[
-            'name' => 'required|max:255',
-            'description' => 'required|max:1024',
-            'price' => 'required|min:1',
-            'amount_sold' => 'required|min:0',
-            'amount_remaining' => 'required|min:1',
-            'image' => 'required'
-        ]);
-        
-        if($validate->failed()){ 
-            return $validate->errors();
-        }
-
+    public function createNewProduct(Request $request){
         try{
-            $user = User::where('id', $id)->first();
+            Validator::make($request->all(),[
+                'id_company' => 'required',
+                'name' => 'required|max:255',
+                'description' => 'required|max:1024',
+                'price' => 'required|min:1',
+                'amount_sold' => 'required|min:0',
+                'amount_remaining' => 'required|min:1',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ]);
+
+            $user = User::where('id', $request->id_user)->first();
             if($user->role == 2){
+                if ($request->hasFile('image')) {
+                    $link = Storage::disk('s3')->put('images/products', $request->image);
+                    $link = Storage::disk('s3')->url($link);
+                }
+
                 $product = Product::create([
                     'id_company' => $request->id_company,
                     'name' => $request->name,
@@ -102,7 +105,7 @@ class ProductController extends Controller
                     'price' => $request->price,
                     'amount_sold' => $request->amount_sold,
                     'amount_remaining' => $request->amount_remaining,
-                    'image' => $request->file('image')->store('public/products')
+                    'image' => $link
                 ]);
                 $product->save();
                 return $product;
