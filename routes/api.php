@@ -34,8 +34,10 @@ Route::post('v1/editProfile',[UserController::class,'editProfile']);
 Route::get('v1/getAllProduct',[ProductController::class,'getAllProduct']);
 Route::get('v2/getAllProduct',[ProductController::class,'getAllProduct2']);
 Route::post('v1/getDetailProduct',[ProductController::class,'getDetailProduct']);
-Route::post('v1/createNewProduct',[ProductController::class,'createNewProduct']);
 Route::post('v1/getReviewProduct',[ProductController::class,'getReviewProduct']);
+Route::post('v1/getProductByCompany',[ProductController::class,'getProductByCompany']);
+Route::post('v1/createNewProduct',[ProductController::class,'createNewProduct']);
+Route::post('v1/editProduct',[ProductController::class,'editProduct']);
 
 //OrderController
 Route::post('v1/order/{id}', [OrderController::class,'order']);
