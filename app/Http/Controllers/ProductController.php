@@ -118,4 +118,39 @@ class ProductController extends Controller
             return response()->json(['message' => $e->getMessage()], 400);
         }
     }
+
+    public function getProductByCompany(Request $request){
+        $company = Company::where('id_user', $request->id_user)->first();
+        return Product::where('id_company', $company->id)->get();
+    }
+
+    public function editProduct(Request $request){
+        try{
+            Validator::make($request->all(),[
+                'name' => 'required|max:255',
+                'description' => 'required|max:1024',
+                'price' => 'required|min:1',
+                'amount_remaining' => 'required|min:1',
+                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+            ]);
+
+            if ($request->hasFile('image')) {
+                $link = Storage::disk('s3')->put('images/products', $request->image);
+                $link = Storage::disk('s3')->url($link);
+            }
+
+            Product::where('id', $request->id_product)->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'price' => $request->price,
+                'amount_remaining' => $request->amount_remaining,
+                'image' => $link
+            ]);
+
+            return Product::where('id', $request->id_product)->first();
+        }
+        catch(Exception $e){
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+    }
 }
