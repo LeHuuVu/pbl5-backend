@@ -86,4 +86,33 @@ class UserController extends Controller
             return response()->json(['message' => $e->getMessage()], 400);
         }
     }
+
+    public function editProfile(Request $request){
+        try{
+            Validator::make($request->all(),[
+                'name' => 'required|max:255',
+                'phone' => 'required',
+                'address' => 'required',
+                'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            ]);
+
+            if ($request->hasFile('avatar')) {
+                $link = Storage::disk('s3')->put('images/avatars', $request->avatar);
+                $link = Storage::disk('s3')->url($link);
+            }
+
+            User::where('id', $request->id_user)->update([
+                'name' => $request->name,
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'avatar' => $link
+            ]);
+            
+            return User::where('id', $request->id_user)->first();
+
+        }
+        catch(Exception $e){
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+    }
 }
