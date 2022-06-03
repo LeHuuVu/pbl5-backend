@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Company;
-use App\Models\Order;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\User;
@@ -82,7 +81,6 @@ class ProductController extends Controller
     public function createNewProduct(Request $request){
         try{
             Validator::make($request->all(),[
-                'id_company' => 'required',
                 'name' => 'required|max:255',
                 'description' => 'required|max:1024',
                 'price' => 'required|min:1',
@@ -93,13 +91,15 @@ class ProductController extends Controller
 
             $user = User::where('id', $request->id_user)->first();
             if($user->role == 2){
+                $company = Company::where('id_user', $request->id_user)->first();
+
                 if ($request->hasFile('image')) {
                     $link = Storage::disk('s3')->put('images/products', $request->image);
                     $link = Storage::disk('s3')->url($link);
                 }
 
                 $product = Product::create([
-                    'id_company' => $request->id_company,
+                    'id_company' => $company->id,
                     'name' => $request->name,
                     'description' => $request->description,
                     'price' => $request->price,
@@ -148,6 +148,16 @@ class ProductController extends Controller
             ]);
 
             return Product::where('id', $request->id_product)->first();
+        }
+        catch(Exception $e){
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+    }
+
+    public function deleteProduct(Request $request){
+        try{
+            Product::where('id', $request->id_product)->delete();
+            return response()->json(['message' => 'Success']);
         }
         catch(Exception $e){
             return response()->json(['message' => $e->getMessage()], 400);

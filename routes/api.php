@@ -29,6 +29,7 @@ Route::post('v1/login',[UserController::class,'login']);
 Route::post('v1/register',[UserController::class,'register']);
 Route::post('v2/register',[UserController::class,'registerV2']);
 Route::post('v1/editProfile',[UserController::class,'editProfile']);
+Route::post('v1/registerSeller',[UserController::class,'registerSeller']);
 
 //ProductController
 Route::get('v1/getAllProduct',[ProductController::class,'getAllProduct']);
@@ -38,6 +39,7 @@ Route::post('v1/getReviewProduct',[ProductController::class,'getReviewProduct'])
 Route::post('v1/getProductByCompany',[ProductController::class,'getProductByCompany']);
 Route::post('v1/createNewProduct',[ProductController::class,'createNewProduct']);
 Route::post('v1/editProduct',[ProductController::class,'editProduct']);
+Route::post('v1/deleteProduct',[ProductController::class,'deleteProduct']);
 
 //OrderController
 Route::post('v1/order/{id}', [OrderController::class,'order']);
