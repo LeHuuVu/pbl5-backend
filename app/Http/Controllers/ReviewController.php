@@ -23,7 +23,7 @@ class ReviewController extends Controller
                 return response()->json(['message' => 'Edit complete']);
             }
             else{
-                $orderList = Order::where('id_user',$request->id_user)->get();
+                $orderList = Order::where('id_user',$request->id_user)->where('is_ordered', true)->get();
                 foreach($orderList as $order){
                     foreach($order->product as $product){
                         if($product->id == $request->id_product){

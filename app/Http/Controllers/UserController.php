@@ -36,7 +36,6 @@ class UserController extends Controller
                 'password' => 'required|min:6',
                 'phone' => 'required',
                 'address' => 'required',
-                'role' => 'required'
             ]);
 
             $user = User::create([
@@ -46,7 +45,7 @@ class UserController extends Controller
                 'phone' => $request->phone,
                 'address' => $request->address,
                 'avatar' => '',
-                'role' => $request->role
+                'role' => 1
             ]);
             $user->save();
             return $user;
@@ -63,7 +62,6 @@ class UserController extends Controller
                 'password' => 'required|min:6',
                 'phone' => 'required',
                 'address' => 'required',
-                'role' => 'required',
                 'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
             if ($request->hasFile('avatar')) {
@@ -77,7 +75,7 @@ class UserController extends Controller
                 'phone' => $request->phone,
                 'address' => $request->address,
                 'avatar' => $link,
-                'role' => $request->role
+                'role' => 1
             ]);
             $user->save();
             return $user;
@@ -110,6 +108,39 @@ class UserController extends Controller
             
             return User::where('id', $request->id_user)->first();
 
+        }
+        catch(Exception $e){
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+    }
+
+    public function registerSeller(Request $request){
+        try{
+            Validator::make($request->all(),[
+                'name' => 'required|max:255',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|min:6',
+                'phone' => 'required',
+                'address' => 'required',
+                'company_name' => 'required'
+            ]);
+
+            $user = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'avatar' => '',
+                'role' => 2
+            ]);
+            
+            Company::create([
+                'id_user' => $user->id,
+                'name' => $request->company_name
+            ]);
+
+            return $user;
         }
         catch(Exception $e){
             return response()->json(['message' => $e->getMessage()], 400);
