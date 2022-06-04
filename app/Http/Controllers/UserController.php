@@ -146,4 +146,33 @@ class UserController extends Controller
             return response()->json(['message' => $e->getMessage()], 400);
         }
     }
+
+    public function getAllUser(Request $request){
+        try{
+            if(User::where('id', $request->id_user)->first()->role == 0){
+                return User::all();
+            }
+            else{
+                return response()->json(['message' => 'Your user cannot perform this function'], 400);
+            }
+        }
+        catch(Exception $e){
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+    }
+
+    public function deleteUser(Request $request){
+        try{
+            if(User::where('id', $request->id_user)->first()->role == 0){
+                User::where('id', $request->id_user_delete)->delete();
+                return response()->json(['message' => 'Success']);
+            }
+            else{
+                return response()->json(['message' => 'Your user cannot perform this function'], 400);
+            }
+        }
+        catch(Exception $e){
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+    }
 }

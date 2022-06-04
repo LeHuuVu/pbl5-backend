@@ -192,7 +192,7 @@ class OrderController extends Controller
                 return response()->json(['message' => "You don't have any items in your cart"]);
             }
 
-            return $listProduct;
+            return ['data' => $listProduct];
 
         }catch(Exception $e){
             return response()->json(['message' => $e->getMessage()], 400);
