@@ -126,28 +126,41 @@ class ProductController extends Controller
 
     public function editProduct(Request $request){
         try{
-            Validator::make($request->all(),[
-                'name' => 'required|max:255',
-                'description' => 'required|max:1024',
-                'price' => 'required|min:1',
-                'amount_remaining' => 'required|min:1',
-                'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
-            ]);
-
-            if ($request->hasFile('image')) {
-                $link = Storage::disk('s3')->put('images/products', $request->image);
-                $link = Storage::disk('s3')->url($link);
+            $user = User::where('id', $request->id_user)->first();
+            if($user->role != 1){
+                $product = Product::where('id', $request->id_product)->first();
+                $company = Company::where('id_user', $request->id_user)->first();
+                if($company->id == $product->id_company || $user->role == 0){
+                    Validator::make($request->all(),[
+                        'name' => 'required|max:255',
+                        'description' => 'required|max:1024',
+                        'price' => 'required|min:1',
+                        'amount_remaining' => 'required|min:1',
+                        'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
+                    ]);
+        
+                    if ($request->hasFile('image')) {
+                        $link = Storage::disk('s3')->put('images/products', $request->image);
+                        $link = Storage::disk('s3')->url($link);
+                    }
+        
+                    Product::where('id', $request->id_product)->update([
+                        'name' => $request->name,
+                        'description' => $request->description,
+                        'price' => $request->price,
+                        'amount_remaining' => $request->amount_remaining,
+                        'image' => $link
+                    ]);
+        
+                    return Product::where('id', $request->id_product)->first();
+                }
+                else{
+                    return response()->json(['message' => 'You do not own this product'], 400);
+                }
             }
-
-            Product::where('id', $request->id_product)->update([
-                'name' => $request->name,
-                'description' => $request->description,
-                'price' => $request->price,
-                'amount_remaining' => $request->amount_remaining,
-                'image' => $link
-            ]);
-
-            return Product::where('id', $request->id_product)->first();
+            else{
+                return response()->json(['message' => 'Your user cannot perform this function'], 400);
+            }
         }
         catch(Exception $e){
             return response()->json(['message' => $e->getMessage()], 400);
@@ -156,8 +169,21 @@ class ProductController extends Controller
 
     public function deleteProduct(Request $request){
         try{
-            Product::where('id', $request->id_product)->delete();
-            return response()->json(['message' => 'Success']);
+            $user = User::where('id', $request->id_user)->first();
+            if($user->role != 1){
+                $product = Product::where('id', $request->id_product)->first();
+                $company = Company::where('id_user', $request->id_user)->first();
+                if($company->id == $product->id_company || $user->role = 0){
+                    $product->delete();
+                    return response()->json(['message' => 'Success']);
+                }
+                else{
+                    return response()->json(['message' => 'You do not own this product'], 400);
+                }
+            }
+            else{
+                return response()->json(['message' => 'Your user cannot perform this function'], 400);
+            }
         }
         catch(Exception $e){
             return response()->json(['message' => $e->getMessage()], 400);
