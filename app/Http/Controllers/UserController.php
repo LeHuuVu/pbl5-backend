@@ -87,26 +87,28 @@ class UserController extends Controller
 
     public function editProfile(Request $request){
         try{
-            Validator::make($request->all(),[
-                'name' => 'required|max:255',
-                'phone' => 'required',
-                'address' => 'required',
-                'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            ]);
-
-            if ($request->hasFile('avatar')) {
-                $link = Storage::disk('s3')->put('images/avatars', $request->avatar);
-                $link = Storage::disk('s3')->url($link);
+            if ($request->has('id_user')){
+                if($request->has('name')){
+                    User::where('id', $request->id_user)->update(['name'=>$request->name]);
+                }
+                if($request->has('phone')){
+                    User::where('id', $request->id_user)->update(['name'=>$request->phone]);
+                }
+                if($request->has('address')){
+                    User::where('id', $request->id_user)->update(['name'=>$request->address]);
+                }
+                if ($request->hasFile('avatar')) {
+                    $user = User::where('id', $request->id_user)->first();
+                    $element = explode("/", $user->avatar);
+                    $path = 'images/avatars/'.$element[5];
+                    Storage::disk('s3')->delete($path);
+                    $link = Storage::disk('s3')->put('images/avatars', $request->avatar);
+                    $link = Storage::disk('s3')->url($link);
+                    User::where('id', $request->id_user)->update(['avatar'=>$link]);
+                }
+                return User::where('id', $request->id_user)->first();
             }
-
-            User::where('id', $request->id_user)->update([
-                'name' => $request->name,
-                'phone' => $request->phone,
-                'address' => $request->address,
-                'avatar' => $link
-            ]);
-            
-            return User::where('id', $request->id_user)->first();
+            else{return response()->json(['message' => "Can't find user"], 404);}
 
         }
         catch(Exception $e){
@@ -134,7 +136,7 @@ class UserController extends Controller
                 'avatar' => '',
                 'role' => 2
             ]);
-            
+
             Company::create([
                 'id_user' => $user->id,
                 'name' => $request->company_name
