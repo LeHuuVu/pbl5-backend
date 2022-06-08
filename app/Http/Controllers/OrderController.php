@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
-    
+
     public function order($id, Request $request){
         try{
             if(User::where('id',$id)->first()){
@@ -22,11 +22,11 @@ class OrderController extends Controller
                         'is_ordered' => true
                     ]
                 );
-    
+
                 $totalPrice = 0;
                 $amountList = [];
                 $productList = [];
-        
+
                 for($i = 0; $i < count($request->id_product); $i++){
                     $product = Product::where('id', $request->id_product[$i])->first();
                     if($product->amount_remaining < $request->amount_order[$i]){
@@ -35,13 +35,13 @@ class OrderController extends Controller
                     array_push($amountList, $request->amount_order[$i]);
                     array_push($productList, $product);
                     $totalPrice = $product->price * $request->amount_order[$i];
-    
+
                     $amountRemaining = $product->amount_remaining - $request->amount_order[$i];
                     $amountSold = $product->amount_sold + $request->amount_order[$i];
                     Product::where('id', $product->id)->update([
                         'amount_remaining' => $amountRemaining,
                         'amount_sold' => $amountSold
-                    ]);       
+                    ]);
                 }
 
                 for($i = 0; $i < count($request->id_product); $i++){
@@ -50,7 +50,7 @@ class OrderController extends Controller
                         'total_price' => $totalPrice
                     ]);
                 }
-                
+
                 return response()->json(['message' => 'Success']);
             }
             else{
@@ -77,13 +77,13 @@ class OrderController extends Controller
                     array_push($amountList, $request->amount_order[$i]);
                     array_push($productList, $product);
                     $totalPrice = $product->price * $request->amount_order[$i];
-    
+
                     $amountRemaining = $product->amount_remaining - $request->amount_order[$i];
                     $amountSold = $product->amount_sold + $request->amount_order[$i];
                     Product::where('id', $product->id)->update([
                         'amount_remaining' => $amountRemaining,
                         'amount_sold' => $amountSold
-                    ]);       
+                    ]);
                 }
 
                 $i = 0;
@@ -97,14 +97,14 @@ class OrderController extends Controller
                 $order->delivery_time = $request->delivery_time;
                 $order->is_ordered = true;
                 $order->save();
-                
+
                 return response()->json(['message' => 'Success']);
 
             }
             else{
                 return response()->json(['message' => "You don't have any items in your cart"], 400);
             }
-            
+
         }catch(Exception $e){
             return response()->json(['message' => $e->getMessage()], 400);
         }
@@ -125,8 +125,8 @@ class OrderController extends Controller
                         ]
                     );
                     $newOrder->product()->save($product,[
-                        'amount' => 0,
-                        'total_price' => 0
+                        'amount' => 1,
+                        'total_price' => $product->price
                     ]);
                 }
                 else{
@@ -138,8 +138,8 @@ class OrderController extends Controller
                     }
                     if(!$is_existed){
                         $order->product()->save($product,[
-                            'amount' => 0,
-                            'total_price' => 0
+                            'amount' => 1,
+                            'total_price' => $product->price,
                         ]);
                     }
                     else{
@@ -157,11 +157,10 @@ class OrderController extends Controller
                     ]
                 );
                 $newOrder->product()->save($product,[
-                    'amount' => 0,
-                    'total_price' => 0
+                    'amount' => 1,
+                    'total_price' => $product->price,
                 ]);
             }
-
             return response()->json(['message' => 'Success']);
         }
         catch(Exception $e){
