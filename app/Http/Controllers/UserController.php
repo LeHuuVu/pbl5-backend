@@ -99,9 +99,11 @@ class UserController extends Controller
                 }
                 if ($request->hasFile('avatar')) {
                     $user = User::where('id', $request->id_user)->first();
-                    $element = explode("/", $user->avatar);
-                    $path = 'images/avatars/'.$element[5];
-                    Storage::disk('s3')->delete($path);
+                    if(!is_null($user->avatar)){
+                        $element = explode("/", $user->avatar);
+                        $path = 'images/avatars/'.$element[5];
+                        Storage::disk('s3')->delete($path);
+                    }
                     $link = Storage::disk('s3')->put('images/avatars', $request->avatar);
                     $link = Storage::disk('s3')->url($link);
                     User::where('id', $request->id_user)->update(['avatar'=>$link]);
