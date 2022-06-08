@@ -99,7 +99,7 @@ class UserController extends Controller
                 }
                 if ($request->hasFile('avatar')) {
                     $user = User::where('id', $request->id_user)->first();
-                    if(!is_null($user->avatar)){
+                    if(strlen($user->avatar) > 0){
                         $element = explode("/", $user->avatar);
                         $path = 'images/avatars/'.$element[5];
                         Storage::disk('s3')->delete($path);
