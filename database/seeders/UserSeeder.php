@@ -27,7 +27,7 @@ class UserSeeder extends Seeder
             'email' => 'thanhhoi@gmail.com',
             'role' => 0,
             'password' => Hash::make(12345678),
-            'avatar' => '',
+            'avatar' => 'https://pbl5-backend.herokuapp.com/avatar/default.png',
             'email_verified_at' => now(),
             'remember_token' => '1234567890',
         ]);
@@ -38,7 +38,7 @@ class UserSeeder extends Seeder
             'email' => 'seller@Ponzi.com',
             'role' => 2,
             'password' => Hash::make(12345678),
-            'avatar' => '',
+            'avatar' => 'https://pbl5-backend.herokuapp.com/avatar/default.png',
             'email_verified_at' => now(),
             'remember_token' => '1234567890',
         ]);
@@ -48,6 +48,19 @@ class UserSeeder extends Seeder
 
         User::factory(16)->create(
             ['role' => 1]
-        );
+        )->each(function($user) {
+            $sanphams = Product::all();
+            Order::factory(rand(1, 20))->create([
+                'id_user' => $user->id
+            ])->each(function($dh) use($sanphams)
+            {
+                $dh->sanphams()->attach(
+                    $sanphams->random(rand(1,$sanphams->count()))->pluck('id')->toArray(),
+                    ['amount' => rand(1,10)]
+                );
+            }
+            );
+
+        });
     }
 }

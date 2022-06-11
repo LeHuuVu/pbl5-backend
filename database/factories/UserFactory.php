@@ -24,9 +24,9 @@ class UserFactory extends Factory
             'email' => $this->faker->unique()->safeEmail(),
             'phone' => $this->faker->unique()->phoneNumber(),
             'email_verified_at' => now(),
-            'password' => Hash::make('123456'),
+            'password' => Hash::make('12345678'),
             'address' => $this->faker->unique()->address(),
-            'avatar' => basename($this->faker->image(storage_path('app/products'))),
+            'avatar' => 'https://pbl5-backend.herokuapp.com/avatar/default.png',
             'remember_token' => Str::random(10),
         ];
     }
