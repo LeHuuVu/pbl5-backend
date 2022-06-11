@@ -44,7 +44,7 @@ class UserController extends Controller
                 'password' => Hash::make($request->password),
                 'phone' => $request->phone,
                 'address' => $request->address,
-                'avatar' => '',
+                'avatar' => 'https://pbl5-backend.herokuapp.com/avatar/default.png',
                 'role' => 1
             ]);
             $user->save();
