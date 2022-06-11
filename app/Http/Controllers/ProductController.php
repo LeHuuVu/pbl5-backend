@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\Product;
 use App\Models\Review;
+use App\Models\Order;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Validator;
