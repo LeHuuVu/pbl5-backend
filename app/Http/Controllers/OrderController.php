@@ -11,6 +11,14 @@ use Illuminate\Http\Request;
 class OrderController extends Controller
 {
 
+    public function index(Request $request)
+    {
+        $donhang = Order::where('user_id', $request->id_user)->whereHas('products', function ($q) use ($id_product) {
+            $q->whereId($id_product);
+        });
+        return $donhang;
+    }
+
     public function order($id, Request $request){
         try{
             if(User::where('id',$id)->first()){
