@@ -64,6 +64,7 @@ class UserController extends Controller
                 'address' => 'required',
                 'avatar' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             ]);
+            $link='https://pbl5-backend.herokuapp.com/avatar/default.png';
             if ($request->hasFile('avatar')) {
                 $link = Storage::disk('s3')->put('images/avatars', $request->avatar);
                 $link = Storage::disk('s3')->url($link);
@@ -129,13 +130,19 @@ class UserController extends Controller
                 'company_name' => 'required'
             ]);
 
+            $link = 'https://pbl5-backend.herokuapp.com/avatar/default.png';
+            if ($request->hasFile('avatar')) {
+                $link = Storage::disk('s3')->put('images/avatars', $request->avatar);
+                $link = Storage::disk('s3')->url($link);
+            }
+
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'phone' => $request->phone,
                 'address' => $request->address,
-                'avatar' => '',
+                'avatar' => $link,
                 'role' => 2
             ]);
 
