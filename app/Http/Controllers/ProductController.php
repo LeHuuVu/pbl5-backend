@@ -228,4 +228,14 @@ class ProductController extends Controller
             return response()->json(['message' => $e->getMessage()], 400);
         }
     }
+
+
+    public function searchProduct(Request $request){
+        $listProduct = Product::where('name', 'like', '%'.$request->key.'%')->get();
+        
+        return $listProduct;
+    }
 }
+
+}
+

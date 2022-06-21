@@ -43,6 +43,7 @@ Route::post('v1/getProductByCompany',[ProductController::class,'getProductByComp
 Route::post('v1/createNewProduct',[ProductController::class,'createNewProduct']);
 Route::post('v1/editProduct',[ProductController::class,'editProduct']);
 Route::post('v1/deleteProduct',[ProductController::class,'deleteProduct']);
+Route::post('v1/searchProduct',[ProductController::class,'searchProduct']);
 
 //OrderController
 Route::get('v1/getOrder',[OrderController::class,'index']);
