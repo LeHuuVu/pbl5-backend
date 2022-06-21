@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\Product;
 use App\Models\Review;
+use App\Models\Order;
 use App\Models\User;
 use Exception;
 use Illuminate\Support\Facades\Validator;
@@ -33,13 +34,13 @@ class ProductController extends Controller
                     'star_rating' => $listRate,
                 ]);
             }
-            
+
             return $listProduct;
 
         }catch(Exception $e){
             return response()->json(['message' => $e->getMessage()], 400);
         }
-        
+
     }
 
     public function getDetailProduct(Request $request){
@@ -62,6 +63,44 @@ class ProductController extends Controller
                 'product' => $product,
                 'company_name' => $company->name,
                 'list_review' => $arrayReview
+            ]);
+        }
+        catch(Exception $e){
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+    }
+
+    public function getDetailProduct2(Request $request){
+        try{
+            $review = 'denied';
+            $orderList = Order::where('id_user',$request->id_user)->where('is_ordered', true)->get();
+                foreach($orderList as $order){
+                    foreach($order->product as $product){
+                        if($product->id == $request->id_product){
+                            $review ='approved';
+                            break 2;
+                        }
+                    }
+                }
+            $product = Product::where('id', $request->id_product)->first();
+            $company = Company::where('id', $product->id_company)->first();
+            $listReview = Review::where('id_product', $request->id_product)->get();
+            $arrayReview = [];
+            if($listReview){
+                foreach($listReview as $review){
+                    $user = User::where('id', $review->id_user)->first();
+                    array_push($arrayReview, [
+                        'review' => $review,
+                        'user_name' => $user->name,
+                        'user_avatar' => $user->avatar
+                    ]);
+                }
+            }
+            return response()->json([
+                'product' => $product,
+                'company_name' => $company->name,
+                'list_review' => $arrayReview,
+                'review' => $review
             ]);
         }
         catch(Exception $e){
@@ -138,12 +177,12 @@ class ProductController extends Controller
                         'amount_remaining' => 'required|min:1',
                         'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
                     ]);
-        
+
                     if ($request->hasFile('image')) {
                         $link = Storage::disk('s3')->put('images/products', $request->image);
                         $link = Storage::disk('s3')->url($link);
                     }
-        
+
                     Product::where('id', $request->id_product)->update([
                         'name' => $request->name,
                         'description' => $request->description,
@@ -151,7 +190,7 @@ class ProductController extends Controller
                         'amount_remaining' => $request->amount_remaining,
                         'image' => $link
                     ]);
-        
+
                     return Product::where('id', $request->id_product)->first();
                 }
                 else{
@@ -190,9 +229,13 @@ class ProductController extends Controller
         }
     }
 
+
     public function searchProduct(Request $request){
         $listProduct = Product::where('name', 'like', '%'.$request->key.'%')->get();
         
         return $listProduct;
     }
 }
+
+}
+

@@ -39,7 +39,7 @@ class ReviewController extends Controller
                         }
                     }
                 }
-    
+
                 return response()->json(
                     ['message' => 'This product has not been purchased by you, please buy before rating'], 400
                 );

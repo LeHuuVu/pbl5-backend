@@ -37,6 +37,7 @@ Route::post('v1/deleteUser',[UserController::class,'deleteUser']);
 Route::get('v1/getAllProduct',[ProductController::class,'getAllProduct']);
 Route::get('v2/getAllProduct',[ProductController::class,'getAllProduct2']);
 Route::post('v1/getDetailProduct',[ProductController::class,'getDetailProduct']);
+Route::post('v2/getDetailProduct',[ProductController::class,'getDetailProduct2']);
 Route::post('v1/getReviewProduct',[ProductController::class,'getReviewProduct']);
 Route::post('v1/getProductByCompany',[ProductController::class,'getProductByCompany']);
 Route::post('v1/createNewProduct',[ProductController::class,'createNewProduct']);
@@ -45,6 +46,7 @@ Route::post('v1/deleteProduct',[ProductController::class,'deleteProduct']);
 Route::post('v1/searchProduct',[ProductController::class,'searchProduct']);
 
 //OrderController
+Route::get('v1/getOrder',[OrderController::class,'index']);
 Route::post('v1/order/{id}', [OrderController::class,'order']);
 Route::post('v2/order', [OrderController::class,'order2']);
 Route::post('v1/addToCart',[OrderController::class,'addToCart']);
