@@ -32,6 +32,7 @@ Route::post('v1/editProfile',[UserController::class,'editProfile']);
 Route::post('v1/registerSeller',[UserController::class,'registerSeller']);
 Route::post('v1/getAllUser',[UserController::class,'getAllUser']);
 Route::post('v1/deleteUser',[UserController::class,'deleteUser']);
+Route::post('v1/getCompany',[UserController::class,'getCompany']);
 
 //ProductController
 Route::get('v1/getAllProduct',[ProductController::class,'getAllProduct']);

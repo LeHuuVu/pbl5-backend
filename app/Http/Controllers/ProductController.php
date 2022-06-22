@@ -234,9 +234,13 @@ class ProductController extends Controller
 
 
     public function searchProduct(Request $request){
-        $listProduct = Product::where('name', 'like', '%'.$request->key.'%')->get();
-        
-        return $listProduct;
+        try{
+            $listProduct = Product::where('name', 'like', '%'.$request->key.'%')->get();
+            return $listProduct;
+        }
+        catch(Exception $e){
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
     }
 }
 
