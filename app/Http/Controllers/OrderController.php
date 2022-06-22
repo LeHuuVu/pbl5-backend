@@ -196,7 +196,7 @@ class OrderController extends Controller
                 }
             }
             else{
-                return response()->json(['message' => "You don't have any items in your cart"]);
+                return response()->json(['message' => "You don't have any items in your cart"], 400);
             }
 
             return ['data' => $listProduct];
@@ -208,13 +208,18 @@ class OrderController extends Controller
 
     public function getHistoryOrder(Request $request){
         try{
-            $order = Order::where('id_user', $request->id_user)->where('is_ordered', true)->get();
-            if(count($order) != 0){
-                return $order;
+            if(User::where('id',$request->id_user)->first()->role != 1){
+                $order = Order::where('id_user', $request->id_user)->where('is_ordered', true)->get();
+                if(count($order) != 0){
+                    return $order;
+                }
+                else{
+                    return response()->json(['message' => "You have not ordered before"], 400);
+                } 
             }
             else{
-                return response()->json(['message' => "You have not ordered before"]);
-            } 
+                return response()->json(['message' => "Your user is not the buyer"], 400);
+            }
         }
         catch(Exception $e){
             return response()->json(['message' => $e->getMessage()], 400);
@@ -224,11 +229,16 @@ class OrderController extends Controller
     public function getDetailOrder(Request $request){
         try{
             $order = Order::where('id', $request->id_order)->first();
-            $listProduct = [];
-            foreach($order->product as $product){
-                array_push($listProduct, $product);
+            if($order){
+                $listProduct = [];
+                foreach($order->product as $product){
+                    array_push($listProduct, $product);
+                }
+                return ['data' => $listProduct];
             }
-            return ['data' => $listProduct];
+            else{
+                return response()->json(['message' => 'This order could not be found'], 400);
+            }
         }
         catch(Exception $e){
             return response()->json(['message' => $e->getMessage()], 400);
