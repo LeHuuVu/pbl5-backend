@@ -5,6 +5,7 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\UserController;
+use App\Models\Order;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +54,8 @@ Route::post('v2/order', [OrderController::class,'order2']);
 Route::post('v1/addToCart',[OrderController::class,'addToCart']);
 Route::post('v1/takeOutFromCart',[OrderController::class,'takeOutFromCart']);
 Route::post('v1/getCart',[OrderController::class,'getCart']);
+Route::post('v1/getHistoryOrder',[OrderController::class,'getHistoryOrder']);
+Route::post('v1/getDetailOrder',[OrderController::class,'getDetailOrder']);
 
 //ReviewController
 Route::post('v1/review',[ReviewController::class,'review']);
