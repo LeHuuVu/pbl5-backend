@@ -205,4 +205,33 @@ class OrderController extends Controller
             return response()->json(['message' => $e->getMessage()], 400);
         }
     }
+
+    public function getHistoryOrder(Request $request){
+        try{
+            $order = Order::where('id_user', $request->id_user)->where('is_ordered', true)->get();
+            if(count($order) != 0){
+                return $order;
+            }
+            else{
+                return response()->json(['message' => "You have not ordered before"]);
+            } 
+        }
+        catch(Exception $e){
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+    }
+
+    public function getDetailOrder(Request $request){
+        try{
+            $order = Order::where('id', $request->id_order)->first();
+            $listProduct = [];
+            foreach($order->product as $product){
+                array_push($listProduct, $product);
+            }
+            return ['data' => $listProduct];
+        }
+        catch(Exception $e){
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+    }
 }
