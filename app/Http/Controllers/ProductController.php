@@ -72,12 +72,12 @@ class ProductController extends Controller
 
     public function getDetailProduct2(Request $request){
         try{
-            $review = 'denied';
+            $userReview = 'denied';
             $orderList = Order::where('id_user',$request->id_user)->where('is_ordered', true)->get();
                 foreach($orderList as $order){
                     foreach($order->product as $product){
                         if($product->id == $request->id_product){
-                            $review ='approved';
+                            $userReview ='approved';
                             break 2;
                         }
                     }
@@ -89,6 +89,9 @@ class ProductController extends Controller
             if($listReview){
                 foreach($listReview as $review){
                     $user = User::where('id', $review->id_user)->first();
+                    if($user->user_id == $request->id_user){
+                        $userReview='denied';
+                    }
                     array_push($arrayReview, [
                         'review' => $review,
                         'user_name' => $user->name,
@@ -100,7 +103,7 @@ class ProductController extends Controller
                 'product' => $product,
                 'company_name' => $company->name,
                 'list_review' => $arrayReview,
-                'review' => $review
+                'review' => $userReview
             ]);
         }
         catch(Exception $e){
