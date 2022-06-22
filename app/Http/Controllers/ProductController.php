@@ -90,7 +90,7 @@ class ProductController extends Controller
                 foreach($listReview as $review){
                     $user = User::where('id', $review->id_user)->first();
                     if($user->user_id == $request->id_user){
-                        $userReview=$review;
+                        $userReview='denied';
                     }
                     array_push($arrayReview, [
                         'review' => $review,
