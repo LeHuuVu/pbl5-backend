@@ -186,4 +186,14 @@ class UserController extends Controller
             return response()->json(['message' => $e->getMessage()], 400);
         }
     }
+
+    public function getCompany(Request $request){
+        try{
+            $company = Company::where('id_user', $request->id_user)->first();
+            return $company;
+        }
+        catch(Exception $e){
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+    }
 }
