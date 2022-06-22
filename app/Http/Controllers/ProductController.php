@@ -89,7 +89,7 @@ class ProductController extends Controller
             if($listReview){
                 foreach($listReview as $review){
                     $user = User::where('id', $review->id_user)->first();
-                    if($user->user_id == $request->id_user){
+                    if($user->id == $request->id_user){
                         $userReview='denied';
                     }
                     array_push($arrayReview, [
