@@ -15,7 +15,27 @@ use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
     public function getAllProduct(){
-        return ['data' => Product::all()];
+        try{
+            $listProduct = [];
+            foreach(Product::all() as $product){
+                $listReview = Review::where('id_product', $product->id)->get();
+                $listRate = [];
+                if($listReview){
+                    foreach($listReview as $review){
+                        array_push($listRate, $review->star_rating);
+                    }
+                }
+                array_push($listProduct, [
+                    'product' => $product,
+                    'star_rating' => $listRate,
+                ]);
+            }
+
+            return ['data' => $listProduct];
+
+        }catch(Exception $e){
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
     }
 
     public function getAllProduct2(){
@@ -35,12 +55,11 @@ class ProductController extends Controller
                 ]);
             }
 
-            return $listProduct;
+            return $listProduct; 
 
         }catch(Exception $e){
             return response()->json(['message' => $e->getMessage()], 400);
         }
-
     }
 
     public function getDetailProduct(Request $request){
