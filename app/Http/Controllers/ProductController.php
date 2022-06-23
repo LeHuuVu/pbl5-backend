@@ -16,22 +16,7 @@ class ProductController extends Controller
 {
     public function getAllProduct(){
         try{
-            $listProduct = [];
-            foreach(Product::all() as $product){
-                $listReview = Review::where('id_product', $product->id)->get();
-                $listRate = [];
-                if($listReview){
-                    foreach($listReview as $review){
-                        array_push($listRate, $review->star_rating);
-                    }
-                }
-                array_push($listProduct, [
-                    'product' => $product,
-                    'star_rating' => $listRate,
-                ]);
-            }
-
-            return ['data' => $listProduct];
+            return ['data' => Product::all()];
 
         }catch(Exception $e){
             return response()->json(['message' => $e->getMessage()], 400);
