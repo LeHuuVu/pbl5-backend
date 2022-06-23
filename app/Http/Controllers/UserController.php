@@ -93,10 +93,10 @@ class UserController extends Controller
                     User::where('id', $request->id_user)->update(['name'=>$request->name]);
                 }
                 if($request->has('phone')){
-                    User::where('id', $request->id_user)->update(['name'=>$request->phone]);
+                    User::where('id', $request->id_user)->update(['phone'=>$request->phone]);
                 }
                 if($request->has('address')){
-                    User::where('id', $request->id_user)->update(['name'=>$request->address]);
+                    User::where('id', $request->id_user)->update(['address'=>$request->address]);
                 }
                 if ($request->hasFile('avatar')) {
                     $user = User::where('id', $request->id_user)->first();
