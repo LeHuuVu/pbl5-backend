@@ -216,16 +216,35 @@ class ProductController extends Controller
     public function deleteProduct(Request $request){
         try{
             $user = User::where('id', $request->id_user)->first();
-            if($user->role != 1){
+            // if($user->role != 1){
+            //     $product = Product::where('id', $request->id_product)->first();
+            //     $company = Company::where('id_user', $request->id_user)->first();
+            //     if($company->id == $product->id_company || $user->role = 0){
+            //         $product->delete();
+            //         return response()->json(['message' => 'Success']);
+            //     }
+            //     else{
+            //         return response()->json(['message' => 'You do not own this product'], 400);
+            //     }
+            // }
+            // else{
+            //     return response()->json(['message' => 'Your user cannot perform this function'], 400);
+            // }
+            if($user->role == 2){
                 $product = Product::where('id', $request->id_product)->first();
                 $company = Company::where('id_user', $request->id_user)->first();
-                if($company->id == $product->id_company || $user->role = 0){
+                if($company->id == $product->id_company){
                     $product->delete();
                     return response()->json(['message' => 'Success']);
                 }
                 else{
                     return response()->json(['message' => 'You do not own this product'], 400);
                 }
+            }
+            elseif($user->role == 0){
+                $product = Product::where('id', $request->id_product)->first();
+                $product->delete();
+                return response()->json(['message' => 'Success']);
             }
             else{
                 return response()->json(['message' => 'Your user cannot perform this function'], 400);
