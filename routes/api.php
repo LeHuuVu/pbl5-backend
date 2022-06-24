@@ -38,6 +38,7 @@ Route::post('v1/getCompany',[UserController::class,'getCompany']);
 //ProductController
 Route::get('v1/getAllProduct',[ProductController::class,'getAllProduct']);
 Route::get('v2/getAllProduct',[ProductController::class,'getAllProduct2']);
+Route::get('v3/getAllProduct',[ProductController::class,'getAllProduct3']);
 Route::post('v1/getDetailProduct',[ProductController::class,'getDetailProduct']);
 Route::post('v2/getDetailProduct',[ProductController::class,'getDetailProduct2']);
 Route::post('v1/getReviewProduct',[ProductController::class,'getReviewProduct']);
