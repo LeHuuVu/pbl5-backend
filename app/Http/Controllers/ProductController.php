@@ -47,6 +47,32 @@ class ProductController extends Controller
         }
     }
 
+    public function getAllProduct3(){
+        try{
+            $listProduct = [];
+            foreach(Product::all() as $product){
+                $company = Company::where('id', $product->id_company)->first();
+                $listReview = Review::where('id_product', $product->id)->get();
+                $listRate = [];
+                if($listReview){
+                    foreach($listReview as $review){
+                        array_push($listRate, $review->star_rating);
+                    }
+                }
+                array_push($listProduct, [
+                    'product' => $product,
+                    'company' => $company->name,
+                    'star_rating' => $listRate,
+                ]);
+            }
+
+            return $listProduct; 
+
+        }catch(Exception $e){
+            return response()->json(['message' => $e->getMessage()], 400);
+        }
+    }
+
     public function getDetailProduct(Request $request){
         try{
             $product = Product::where('id', $request->id_product)->first();
@@ -216,20 +242,6 @@ class ProductController extends Controller
     public function deleteProduct(Request $request){
         try{
             $user = User::where('id', $request->id_user)->first();
-            // if($user->role != 1){
-            //     $product = Product::where('id', $request->id_product)->first();
-            //     $company = Company::where('id_user', $request->id_user)->first();
-            //     if($company->id == $product->id_company || $user->role = 0){
-            //         $product->delete();
-            //         return response()->json(['message' => 'Success']);
-            //     }
-            //     else{
-            //         return response()->json(['message' => 'You do not own this product'], 400);
-            //     }
-            // }
-            // else{
-            //     return response()->json(['message' => 'Your user cannot perform this function'], 400);
-            // }
             if($user->role == 2){
                 $product = Product::where('id', $request->id_product)->first();
                 $company = Company::where('id_user', $request->id_user)->first();
