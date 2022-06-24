@@ -180,7 +180,7 @@ class ProductController extends Controller
                         'amount_remaining' => 'required|min:1',
                         'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048'
                     ]);
-
+                    $link = $product->image;
                     if ($request->hasFile('image')) {
                         $link = Storage::disk('s3')->put('images/products', $request->image);
                         $link = Storage::disk('s3')->url($link);
