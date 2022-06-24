@@ -208,7 +208,7 @@ class OrderController extends Controller
 
     public function getHistoryOrder(Request $request){
         try{
-            if(User::where('id',$request->id_user)->first()->role != 1){
+            if(User::where('id',$request->id_user)->first()->role == 1){
                 $order = Order::where('id_user', $request->id_user)->where('is_ordered', true)->get();
                 if(count($order) != 0){
                     return $order;
