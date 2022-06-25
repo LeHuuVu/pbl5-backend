@@ -209,9 +209,23 @@ class OrderController extends Controller
     public function getHistoryOrder(Request $request){
         try{
             if(User::where('id',$request->id_user)->first()->role == 1){
-                $order = Order::where('id_user', $request->id_user)->where('is_ordered', true)->get();
-                if(count($order) != 0){
-                    return $order;
+                $listOrder = Order::where('id_user', $request->id_user)->where('is_ordered', true)->get();
+                if(count($listOrder) != 0){
+                    $listHistory = [];
+                    $productList = [];
+                    foreach($listOrder as $order){
+                        foreach($order->product as $product){
+                            $productList[] = $product;
+                        }
+                        array_push($listHistory, [
+                            '$id' => $order->id,
+                            'id_user' => $order->id_user,
+                            'delivery_address' => $order->delivery_address,
+                            'delivery_time' => $order->delivery_time,
+                            'total_price' => $productList[0]->pivot->total_price
+                        ]);
+                    }
+                    return $listHistory;
                 }
                 else{
                     return response()->json(['message' => "You have not ordered before"], 400);
