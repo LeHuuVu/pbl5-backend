@@ -270,7 +270,20 @@ class ProductController extends Controller
 
     public function searchProduct(Request $request){
         try{
-            $listProduct = Product::where('name', 'like', '%'.$request->key.'%')->get();
+            $listProduct = [];
+            foreach(Product::where('name', 'like', '%'.$request->key.'%')->get() as $product){
+                $listReview = Review::where('id_product', $product->id)->get();
+                $listRate = [];
+                if($listReview){
+                    foreach($listReview as $review){
+                        array_push($listRate, $review->star_rating);
+                    }
+                }
+                array_push($listProduct, [
+                    'product' => $product,
+                    'star_rating' => $listRate,
+                ]);
+            }
             return $listProduct;
         }
         catch(Exception $e){
