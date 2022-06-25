@@ -218,10 +218,12 @@ class OrderController extends Controller
                             $productList[] = $product;
                         }
                         array_push($listHistory, [
-                            '$id' => $order->id,
+                            'id' => $order->id,
                             'id_user' => $order->id_user,
                             'delivery_address' => $order->delivery_address,
                             'delivery_time' => $order->delivery_time,
+                            'created_at' => $order->created_at,
+                            'updated_at' => $order->updated_at,
                             'total_price' => $productList[0]->pivot->total_price
                         ]);
                     }
