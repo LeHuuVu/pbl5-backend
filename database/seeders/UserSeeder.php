@@ -54,7 +54,7 @@ class UserSeeder extends Seeder
                 'id_user' => $user->id
             ])->each(function($dh) use($sanphams)
             {
-                $dh->sanphams()->attach(
+                $dh->Product()->attach(
                     $sanphams->random(rand(1,$sanphams->count()))->pluck('id')->toArray(),
                     ['amount' => rand(1,10)]
                 );
