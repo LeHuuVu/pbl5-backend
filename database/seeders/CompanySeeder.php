@@ -17,7 +17,7 @@ class CompanySeeder extends Seeder
      */
     public function run()
     {
-        $user = User::Where('role', 2);
+        $user = User::Where('role', 2)->get();
         Company::factory(3)->create(
             ['id_user' => $user[rand(0,($user->count()-1))]->id]
         );
